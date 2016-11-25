@@ -1,0 +1,6 @@
+<IfModule mod_rewrite.c>
+RewriteEngine on
+RewriteCond %{REQUEST_URI} !^public
+RewriteRule ^backend(.*)$ backend/web/$1 [L,PT]
+RewriteRule ^(.*)$ frontend/web/$1 [L,QSA]
+</IfModule>
