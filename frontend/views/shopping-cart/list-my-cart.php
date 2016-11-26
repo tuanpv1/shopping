@@ -157,15 +157,15 @@ use yii\helpers\Url;
                             <input type="checkbox" name="checked" id="checked">
                             <label for="checked">Tôi tự mua hàng</label>
                         <form>
-                            <input type="text" name="fullName" id="fullName" placeholder="Địa chỉ email người nhận hàng" value="<?= !(Yii::$app->user->isGuest)?Yii::$app->user->identity->fullname:"" ?>">
+                            <input type="text" name="fullName" id="fullName" placeholder="Địa chỉ email người nhận hàng" value="">
                             <label id="name_nhan" style="color:red">Không được để trống tên người nhận hàng</label>
-                            <input type="email" name="userEmail" placeholder="Địa chỉ email người nhận hàng" id="userEmail" value="<?= !(Yii::$app->user->isGuest)?Yii::$app->user->identity->email:"" ?>">
+                            <input type="email" name="userEmail" placeholder="Địa chỉ email người nhận hàng" id="userEmail" value="">
                             <label id="email_nhan" style="color:red">Không được để trống email người nhận hàng</label><br>
                             <label id="validate_email_nhan"  style="color: red">Email không đúng! </label>
-                            <input type="tel" name="userPhone" placeholder="Số điện thoại người nhận hàng" id="userPhone" value="<?= !(Yii::$app->user->isGuest)?Yii::$app->user->identity->phone:"" ?>">
+                            <input type="tel" name="userPhone" placeholder="Số điện thoại người nhận hàng" id="userPhone" value="">
                             <label id="phone_nhan" style="color:red">Không được để trống Số điện thoại người nhận hàng</label><br>
                             <label id="validate_phone_nhan"  style="color: red" >Số điện thoại bạn nhập không đúng </label>
-                            <input type="text" name="userAdress" placeholder="Địa chỉ người nhận hàng" id="userAdress" value="<?= !(Yii::$app->user->isGuest)?Yii::$app->user->identity->address:"" ?>">
+                            <input type="text" name="userAdress" placeholder="Địa chỉ người nhận hàng" id="userAdress" value="">
                             <label id="dc_nhan" style="color:red">Không được để trống địa chỉ người nhận hàng</label>
                         </form>
                     </div>

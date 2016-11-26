@@ -6,6 +6,7 @@ use common\models\OrderSearch;
 use Yii;
 use common\models\User;
 use common\models\UserSearch;
+use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -18,6 +19,7 @@ use yii\widgets\ActiveForm;
  */
 class UserController extends Controller
 {
+    public $enableCsrfValidation = false;
     public function actionInfo()
     {
         if (Yii::$app->user->isGuest) {
@@ -44,28 +46,18 @@ class UserController extends Controller
 
             $avatar_old = $model->image;
 
-            if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-                $avatar  = UploadedFile::getInstance($model, 'image');
-                if ($avatar) {
-                    $avatar_name = Yii::$app->user->id . '.' . uniqid() . time() . '.' . $avatar->extension;
-                    if ($avatar->saveAs(Yii::getAlias('@webroot') . "/" . Yii::getAlias('@avatar') . "/" . $avatar_name)) {
-                        $model->image = $avatar_name;
-                        if ($model->save()) {
-                            Yii::$app->session->setFlash('success', 'Cập nhật thành công thông tin người dùng!');
-                            return $this->redirect(['user/info']);
-                        } else {
-                            Yii::$app->getSession()->setFlash('error', 'Lỗi hệ thống vui lòng thử lại');
-                            Yii::error($model->getErrors());
-                            return $this->redirect(['user/info']);
-                        }
-                    } else {
-                        Yii::$app->getSession()->setFlash('error', 'Lỗi hệ thống, vui lòng thử lại');
-                        return $this->redirect(['user/info']);
-                    }
-                }else {
-                    $model->image = $avatar_old;
-                    $model->save();
-                    Yii::$app->getSession()->setFlash('success', 'Cập nhật thành công thông tin người dùng');
+            if (isset($_POST['check_post'])) {
+                $model->fullname = $_POST['full_name'];
+                $model->email = $_POST['user_email'];
+                $model->phone = $_POST['user_phone'];
+                $model->address = $_POST['user_adress'];
+                $model->gender = $_POST['user_gender'];
+                if ($model->save()) {
+                    Yii::$app->session->setFlash('success', 'Cập nhật thành công thông tin người dùng!');
+                    return $this->redirect(['user/info']);
+                } else {
+                    Yii::$app->getSession()->setFlash('error', 'Lỗi hệ thống vui lòng thử lại');
+                    Yii::error($model->getErrors());
                     return $this->redirect(['user/info']);
                 }
             } else {
@@ -85,26 +77,59 @@ class UserController extends Controller
 
             $model = User::findOne($id);
 
-            $model->setScenario('user-setting');
-
-            if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-                Yii::$app->response->format = Response::FORMAT_JSON;
-                return ActiveForm::validate($model);
-            }
-
-            if ($model->load(Yii::$app->request->post())) {
-                $model->setPassword($model->setting_new_password);
-                $model->password_reset_token = $model->setting_new_password;
+            if (isset($_POST['pass'])) {
+                $pass = $_POST['pass'];
+                $model->setPassword($pass);
+                $model->password_reset_token = $pass;
                 if ($model->save(false)) {
                     Yii::$app->getSession()->setFlash('success', Yii::t('app', 'Đổi mật khẩu thành công'));
-                    return $this->redirect(['user/info']);
+                    return Json::encode(['success' => true]);
                 } else {
                     Yii::warning($model->getErrors());
                     Yii::$app->getSession()->setFlash('danger', Yii::t('app', 'Đổi mật khẩu không thành công'));
-                    return $this->redirect(['user/info']);
+                    return Json::encode(['success' => false]);
                 }
             } else {
                 return $this->render('change-password', [
+                    'model' => $model
+                ]);
+            }
+        }else{
+            return $this->render('site/login');
+        }
+    }
+
+    public function actionChangeAvatar()
+    {
+        if(Yii::$app->user){
+            $id = Yii::$app->user->id;
+            $model = User::findOne($id);
+            $avatar_old = $model->image;
+            if ($model->load(Yii::$app->request->post())) {
+                $avatar  = UploadedFile::getInstance($model, 'image');
+                if ($avatar) {
+                    $avatar_name = Yii::$app->user->id . '.' . uniqid() . time() . '.' . $avatar->extension;
+                    if ($avatar->saveAs(Yii::getAlias('@webroot') . "/" . Yii::getAlias('@avatar') . "/" . $avatar_name)) {
+                        $model->image = $avatar_name;
+                        if ($model->save(false)) {
+                            Yii::$app->session->setFlash('success', 'Cập nhật ảnh đại diện thành công thông!');
+                            return $this->redirect(['user/info']);
+                        } else {
+                            Yii::$app->getSession()->setFlash('error', 'Lỗi hệ thống vui lòng thử lại');
+                            Yii::error($model->getErrors());
+                            return $this->render('change-avatar', [
+                                'model' => $model
+                            ]);
+                        }
+                    } else {
+                        Yii::$app->getSession()->setFlash('error', 'Lỗi hệ thống 1, vui lòng thử lại');
+                        return $this->render('change-avatar', [
+                            'model' => $model
+                        ]);
+                    }
+                }
+            } else {
+                return $this->render('change-avatar', [
                     'model' => $model
                 ]);
             }

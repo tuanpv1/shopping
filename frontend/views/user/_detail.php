@@ -5,6 +5,7 @@
  * Date: 11/25/2016
  * Time: 7:11 PM
  */
+use common\models\User;
 use kartik\detail\DetailView;
 use kartik\helpers\Html;
 
@@ -28,5 +29,9 @@ use kartik\helpers\Html;
         'email:email',
         'phone',
         'address',
+        [
+            'label' => 'Giới tính',
+            'value' => $model->gender?User::getGenderName($model->gender):'',
+        ]
     ],
 ]) ?>

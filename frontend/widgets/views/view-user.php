@@ -19,12 +19,17 @@ use yii\helpers\Url;
             </div>
             <div class="panel panel-default">
                 <div class="panel-heading text-center">
-                    <h4 class="panel-title "><a href="<?= Url::to(['user/info']) ?>"><?= $model->username ?></a></h4>
+                    <h4 class="panel-title "><a href="<?= Url::to(['user/change-avatar']) ?>">đổi avatar</a></h4>
                 </div>
             </div>
             <div class="panel panel-default">
                 <div class="panel-heading text-center">
                     <h4 class="panel-title "><a href="<?= Url::to(['user/change-password']) ?>">đổi mật khẩu</a></h4>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading text-center">
+                    <h4 class="panel-title "><a href="<?= Url::to(['user/info']) ?>"><?= $model->username ?></a></h4>
                 </div>
             </div>
         </div>

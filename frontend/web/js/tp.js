@@ -21,6 +21,11 @@ $(window).load (function(){
     $('#validate_email_mua').hide();
     $('#validate_email_nhan').hide();
     $('#c_validate').hide();
+    $('#old_pass').hide();
+    $('#confirm_pass').hide();
+    $('#old_pass_input').hide();
+    $('#confirm_pass_input').hide();
+    $('#new_pass_input').hide();
 });
 
 jQuery(document).ready(function(){
@@ -42,6 +47,54 @@ jQuery(document).ready(function(){
 });
 
 $(document).ready(function(){
+    $('#user_old_pass').focusout(function(){
+        if(($(this).val().trim() == null || $(this).val().trim() == "")){
+            $('#old_pass_input').show();
+            $(this).focus();
+        }else{
+            $('#old_pass_input').hide();
+            var old = $(this).val();
+            $.ajax({
+                type: "POST",
+                url: baseurl+'site/check-pass',
+                data: {
+                    old:old
+                },
+                success: function(data) {
+                    var rs = JSON.parse(data);
+                    if (!rs['success']) {
+                        $('#old_pass').show();
+                    }else{
+                        $('#old_pass').hide();
+                    }
+                }
+            });
+        }
+    });
+    $('#user_new_pass').focusout(function(){
+        if(($(this).val().trim() == null || $(this).val().trim() == "")){
+            $('#new_pass_input').show();
+            $(this).focus();
+        }else{
+            $('#new_pass_input').hide();
+        }
+    });
+    $('#user_confirm_pass').focusout(function(){
+        if(($(this).val().trim() == null || $(this).val().trim() == "")){
+            $('#confirm_pass_input').show();
+            $(this).focus();
+        }else{
+            $('#confirm_pass_input').hide();
+            var str1 = $(this).val();
+            var str2 = $('#user_new_pass').val();
+            var n = str1.localeCompare(str2);
+            if(n !=0 ){
+                $('#confirm_pass').show();
+            }else{
+                $('#confirm_pass').hide();
+            }
+        }
+    });
     $('#fullName').focusout(function(){
         if(($(this).val().trim() == null || $(this).val().trim() == "")){
             $('#name_nhan').show();
@@ -125,6 +178,25 @@ $(document).ready(function(){
         }else{
             $('#dc_mua').hide();
         }
+    });
+
+    $('#btn_pass').click(function(){
+        var pass = $('#user_new_pass').val();
+        $.ajax({
+            type: "POST",
+            url: baseurl+'user/change-password',
+            data: {
+                pass:pass,
+            },
+            success: function(data) {
+                var rs = JSON.parse(data);
+                if (rs['success']) {
+                    location.href= baseurl+'user/info';
+                }else {
+                    location.href= baseurl+'user/change-password';
+                }
+            }
+        });
     });
 
     $('#btn').click(function(){

@@ -23,7 +23,7 @@ use yii\helpers\Url;
             <div class="col-sm-9 padding-right">
                 <h2 class="title text-center">Thông tin chi tiết người dùng</h2>
                 <p>
-                    <?= Html::a('Cập nhật', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+                    <?= Html::a('Cập nhật', ['update'], ['class' => 'btn btn-primary']) ?>
                 </p>
                 <div class="tabbable-custom nav-justified">
                     <ul class="nav nav-tabs nav-justified">

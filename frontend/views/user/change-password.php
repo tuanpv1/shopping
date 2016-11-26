@@ -24,27 +24,23 @@ use yii\helpers\Url;
             <?= viewUser::Widget() ?>
             <div class="col-sm-9 padding-right">
                 <h2 class="title text-center">Thay đổi mật khẩu</h2>
-                <div class="tabbable-custom nav-justified">
-                    <?php $form = ActiveForm::begin([
-                        'type' => ActiveForm::TYPE_HORIZONTAL,
-                    ]); ?>
+                <div class="col-sm-8 col-sm-offset-2">
+                    <div class="shopper-info">
+                        <form>
+                            <input type="password"  name="user_old_pass" id="user_old_pass" placeholder="Mật khẩu cũ">
+                            <label id="old_pass" style="color:red">Mật khẩu cũ không đúng</label>
+                            <label id="old_pass_input" style="color:red">Mật khẩu cũ không được để trống</label>
+                            <input type="password" name="user_new_pass" id="user_new_pass" placeholder="Mật khẩu mới" >
+                            <label id="new_pass_input" style="color:red">Mật khẩu mới không được để trống</label>
+                            <input type="password" name="user_confirm_pass" placeholder="Xác nhận mật khẩu" id="user_confirm_pass" value="" >
+                            <label id="confirm_pass" style="color:red">Mật khẩu mới không trùng khớp</label>
+                            <label id="confirm_pass_input" style="color:red">Xác nhận mật khẩu không được để trống</label>
+                            <br>
 
-                    <div>
-                        <?= $form->field($model, 'old_password')->passwordInput(['placeholder'=>'Nhập mật khẩu cũ'])->label('Mật khẩu cũ (*)') ?>
+                            <a class="btn btn-primary" id="btn_pass" href="javascript:void(0)">Đổi mật khẩu</a>
+                            <a href="<?= Url::to(['user/info']) ?>" class="btn btn-primary" id="btn">Hủy</a>
+                        </form>
                     </div>
-
-                    <div>
-                        <?= $form->field($model, 'setting_new_password')->passwordInput(['placeholder'=>'Nhập mật khẩu mới'])->label('Mật khẩu mới (*)')  ?>
-                    </div>
-
-                    <div>
-                        <?= $form->field($model, 'confirm_password')->passwordInput(['placeholder'=>'Xác nhận mật khẩu mới'])->label('Xác nhận mật khẩu mới (*)')  ?>
-                    </div>
-                    <div class="text-center">
-                        <?= Html::submitButton($model->isNewRecord ? 'Tạo mới' : 'Đổi mật khẩu', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-                        <?= Html::a('Hủy', ['user/info'], ['class' => 'btn btn-primary']) ?>
-                    </div>
-                    <?php ActiveForm::end(); ?>
                 </div>
             </div>
         </div>

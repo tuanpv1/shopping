@@ -5,6 +5,7 @@ use common\models\Category;
 use common\models\Order;
 use common\models\OrderDetailSearch;
 use common\models\Product;
+use common\models\User;
 use DateTime;
 use Yii;
 use yii\base\InvalidParamException;
@@ -24,6 +25,7 @@ use frontend\models\ContactForm;
  */
 class SiteController extends Controller
 {
+    public $enableCsrfValidation = false;
     /**
      * @inheritdoc
      */
@@ -259,5 +261,18 @@ class SiteController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+
+    public function actionCheckPass()
+    {
+        $id = Yii::$app->user->id;
+        $password_hash = User::findOne($id)->password_hash;
+        $old = $_POST['old'];
+        $rs = Yii::$app->security->validatePassword($old, $password_hash);
+        if($rs){
+            return Json::encode(['success' => true]);
+        }else{
+            return Json::encode(['success' => false]);
+        }
     }
 }

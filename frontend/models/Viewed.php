@@ -19,25 +19,38 @@ class Viewed
         }else{
             $viewed = $session['viewed'];
             foreach($viewed as $key => $value) {
-                if($value['id']== $arrayData['id']){
+//                echo"<pre>";print($arrayData['id'].$value['id']);die();
+                if($value['id']== $arrayData['id'] && $key == 0){
+                    $viewed[0] = [
+                        'id'=>$arrayData['id'],
+                        'name'=> $arrayData['name'],
+                        'price'=> $arrayData['price'],
+                        'sale'=> $arrayData['sale'],
+                        'image'=> $arrayData['image'],
+                    ];
+                }elseif($value['id']== $arrayData['id']){
                     unset($viewed[$key]);
                     $session['viewed'] = $viewed;
                 }
             }
             $session['viewed'] = $viewed;
             $n = count($viewed);
-            $i = $n-1;
+            $i = $n;
 //            echo"<pre>";print_r($viewed);die();
-            for($i ; $i >= 0; $i-- ){
+            for($i=0 ; $i < $n; $i++ ){
                 $viewed[$i+1] = $viewed[$i];
+                if($viewed[$i]['id'] != $arrayData['id']){
+                    $viewed[$i] = [
+                        'id'=>$arrayData['id'],
+                        'name'=> $arrayData['name'],
+                        'price'=> $arrayData['price'],
+                        'sale'=> $arrayData['sale'],
+                        'image'=> $arrayData['image'],
+                    ];
+                }else{
+                    unset($viewed[$i]);
+                }
             }
-            $viewed[0] = [
-                'id'=>$arrayData['id'],
-                'name'=> $arrayData['name'],
-                'price'=> $arrayData['price'],
-                'sale'=> $arrayData['sale'],
-                'image'=> $arrayData['image'],
-            ];
         }
         $session['viewed'] = $viewed;
     }

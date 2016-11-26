@@ -17,45 +17,32 @@ $avatarPreview = !$model->isNewRecord && !empty($model->image);
         <div class="breadcrumbs">
             <ol class="breadcrumb">
                 <li><a href="<?= Url::to(['site/index']) ?>">Home</a></li>
-                <li><a href="<?= Url::to(['site/index']) ?>">Thông tin cá nhân</a></li>
+                <li><a href="<?= Url::to(['user/info']) ?>">Thông tin cá nhân</a></li>
                 <li class="active">cập nhật thông tin cá nhân</li>
             </ol>
         </div>
         <div class="row">
             <?= viewUser::Widget() ?>
-            <div class="col-sm-9 padding-right">
+            <div class="col-sm-9 padding-right text-center">
                 <h2 class="title text-center">Nhập thông tin cập nhật</h2>
-
-                <?php $form = ActiveForm::begin([
-                    'options' => ['enctype' => 'multipart/form-data'],
-                    'type' => ActiveForm::TYPE_HORIZONTAL,
-                    'fullSpan' => 8,
-                ]); ?>
-
-                <?= $form->field($model, 'username')->textInput(['maxlength' => true,'readonly'=>true]) ?>
-
-                <?= $form->field($model, 'fullname')->textInput(['maxlength' => true]) ?>
-
-                <?= $form->field($model, 'image')->fileInput()?>
-
-                <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
-
-                <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
-
-                <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
-
-                <?= $form->field($model, 'gender')->dropDownList([
-                        'data' => User::getListGender(),
-                    ]
-                )?>
-
-                <div class="row text-center">
-                    <?= Html::submitButton($model->isNewRecord ? 'Tạo mới' : 'Cập nhật', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-                    <?= Html::a('Hủy', ['user/info'], ['class' => 'btn btn-primary']) ?>
+                <div class="col-sm-8 col-sm-offset-2">
+                    <div class="shopper-info">
+                        <form action="<?= Url::to(['user/update']) ?>" method="post" enctype="multipart/form-data">
+                            <input type="text" readonly="readonly" name="user_name" id="user_name" placeholder="Tên đăng nhập" value="<?= $model->username?$model->username:'' ?>">
+                            <input type="text" name="full_name" id="full_name" placeholder="Họ và tên" value="<?= $model->fullname?$model->fullname:'' ?>">
+                            <input type="email" name="user_email" required placeholder="Địa chỉ email" id="user_email" value="<?= $model->email?$model->email:'' ?>">
+                            <input type="tel" name="user_phone" required placeholder="Số điện thoại người mua hàng" id="user_phone" value="<?= $model->phone?'0'.$model->phone:'' ?>">
+                            <input type="text" required name="user_adress" placeholder="Địa chỉ người mua hàng" id="user_adress" value="<?= $model->address?$model->address:'' ?>">
+                            <input type="hidden" id="check_post" name="check_post" value="1">
+                            <select name="user_gender">
+                                <option value="1">Nam</option>
+                                <option value="2">Nữ</option>
+                            </select>
+                            <button class="btn btn-primary" id="btn">Cập nhật</button>
+                            <a href="<?= Url::to(['user/info']) ?>" class="btn btn-primary" id="btn">Hủy</a>
+                        </form>
+                    </div>
                 </div>
-
-                <?php ActiveForm::end(); ?>
-
             </div>
         </div>
     </div>
