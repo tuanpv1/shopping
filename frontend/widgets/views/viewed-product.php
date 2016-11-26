@@ -1,14 +1,15 @@
 <?php
 use common\models\Product;
+if(isset($viewedInfo)) {
 ?>
 <div class="recommended_items"><!--recommended_items-->
     <h2 class="title text-center">Các sản phẩm đã xem</h2>
     <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
             <?php
-                if(isset($viewedInfo)) {
+//                if(isset($viewedInfo)) {
                     $i = 0;
-                    for ($j = 0; $j < count($viewedInfo); $j++) {
+//                    for ($j = 0; $j < count($viewedInfo); $j++) {
                         ?>
                         <div class="item <?= $i < 3 ? 'active' : '' ?>">
                             <?php
@@ -37,15 +38,18 @@ use common\models\Product;
                             ?>
                         </div>
                         <?php
-                    }
-                }
+//                    }
+//                }
                 ?>
         </div>
-        <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
-            <i class="fa fa-angle-left"></i>
-        </a>
-        <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
-            <i class="fa fa-angle-right"></i>
-        </a>
+<!--        <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">-->
+<!--            <i class="fa fa-angle-left"></i>-->
+<!--        </a>-->
+<!--        <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">-->
+<!--            <i class="fa fa-angle-right"></i>-->
+<!--        </a>-->
     </div>
 </div><!--/recommended_items-->
+<?php
+}
+?>

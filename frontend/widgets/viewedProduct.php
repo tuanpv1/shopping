@@ -23,6 +23,7 @@ class viewedProduct extends Widget{
     {
         $session = Yii::$app->session;
         $viewedInfo = $session['viewed'];
+//        echo"<pre>";print_r($viewedInfo);die();
         return $this->render('viewed-product',['viewedInfo'=>$viewedInfo]);
     }
 }
