@@ -9,7 +9,7 @@ class Viewed
     public  function addViewed($id,$arrayData){
         $session = Yii::$app->session;
         if(!isset($session['viewed'])){
-            $viewed[] = [
+            $viewed[0] = [
                 'id'=>$arrayData['id'],
                 'name'=> $arrayData['name'],
                 'price'=> $arrayData['price'],
@@ -27,6 +27,7 @@ class Viewed
             $session['viewed'] = $viewed;
             $n = count($viewed);
             $i = $n-1;
+//            echo"<pre>";print_r($viewed);die();
             for($i ; $i >= 0; $i-- ){
                 $viewed[$i+1] = $viewed[$i];
             }

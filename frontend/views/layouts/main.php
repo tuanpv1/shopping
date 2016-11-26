@@ -86,7 +86,6 @@ AppAsset::register($this);
                                 <?php
                             }
                             ?>
-                            <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Thanh toán</a></li>
                             <?= cartWidget::Widget() ?>
                             <?php
                                 if (Yii::$app->user->isGuest) {
