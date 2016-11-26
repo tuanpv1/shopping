@@ -13,7 +13,7 @@ use kartik\grid\GridView;
             'attribute' => 'name',
             'format' => 'html',
             'value' => function ($model, $key, $index, $widget) {
-                return Html::a($model->name, ['view', 'id' => $model->id], ['class' => 'label label-primary']);
+                return Html::a($model->name, ['produce/view', 'id' => $model->id], ['class' => 'label label-primary']);
             },
         ],
         [

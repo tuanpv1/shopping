@@ -26,7 +26,7 @@ use yii\helpers\Html;
             'attribute' => 'name',
             'format' => 'html',
             'value' => function ($model, $key, $index, $widget) {
-                return Html::a($model->name, ['view', 'id' => $model->id], ['class' => 'label label-primary']);
+                return Html::a($model->name, ['product/view', 'id' => $model->id], ['class' => 'label label-primary']);
             },
         ],
         [
