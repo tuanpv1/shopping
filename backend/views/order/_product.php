@@ -29,7 +29,7 @@ use yii\helpers\Html;
             'attribute' => 'product_id',
             'format' => 'html',
             'value' => function ($model, $key, $index, $widget) {
-                return Html::a(Product::findOne($model->product_id)->name, ['view', 'id' => $model->product_id], ['class' => 'label label-primary']);
+                return Html::a(Product::findOne($model->product_id)->name, ['product/view', 'id' => $model->product_id], ['class' => 'label label-primary']);
             },
         ],
         [
