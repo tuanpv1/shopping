@@ -34,20 +34,32 @@ class Viewed
                     'image'=> $arrayData['image'],
                 ];
             }else{
-                $n = count($viewed);
-//                echo"<pre>";print_r($n);die();
-                for($i = 1; $i <= $n; $i++){
-                    $viewed[$i] = $viewed[$i-1];
+//                echo"<pre>";print_r($viewed);die();
+                if(!isset($viewed[0])){
+                    $viewed[0] = [
+                        'id'=>$arrayData['id'],
+                        'name'=> $arrayData['name'],
+                        'price'=> $arrayData['price'],
+                        'sale'=> $arrayData['sale'],
+                        'image'=> $arrayData['image'],
+                    ];
+                }else{
+                    $n = count($viewed);
+//                    echo"<pre>";print_r($n);die();
+                    for($i = $n; $i >0; $i--){
+                        $viewed[$i] = $viewed[$i-1];
+                    }
+                    $viewed[0] = [
+                        'id'=>$arrayData['id'],
+                        'name'=> $arrayData['name'],
+                        'price'=> $arrayData['price'],
+                        'sale'=> $arrayData['sale'],
+                        'image'=> $arrayData['image'],
+                    ];
                 }
-                $viewed[0] = [
-                    'id'=>$arrayData['id'],
-                    'name'=> $arrayData['name'],
-                    'price'=> $arrayData['price'],
-                    'sale'=> $arrayData['sale'],
-                    'image'=> $arrayData['image'],
-                ];
             }
         }
+//        echo"<pre>";print_r($viewed);die();
         $session['viewed'] = $viewed;
     }
 }
