@@ -150,7 +150,7 @@ class User extends ActiveRecord implements IdentityInterface
             [['gender'],'integer'],
             ['birthday', 'default', 'value' => null],
 
-            [['fullname', 'address'], 'string', 'max' => 255],
+            [['fullname', 'address','password_reset_token'], 'string', 'max' => 255],
 
             ['birthday', 'default', 'value' => null],
             [['image'], 'file', 'extensions' => ['png', 'jpg','jpeg', 'gif'], 'maxSize' => 1024 * 1024 * 10, 'tooBig' => 'Dung lượng ảnh vượt quá 10mb'],

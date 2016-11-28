@@ -80,7 +80,7 @@ class UserController extends Controller
             if (isset($_POST['pass'])) {
                 $pass = $_POST['pass'];
                 $model->setPassword($pass);
-                $model->password_reset_token = $pass;
+//                $model->password_reset_token = $pass;
                 if ($model->save(false)) {
                     Yii::$app->getSession()->setFlash('success', Yii::t('app', 'Đổi mật khẩu thành công'));
                     return Json::encode(['success' => true]);
